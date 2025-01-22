@@ -10,6 +10,8 @@ import * as Dialog from '@radix-ui/react-dialog'; // Import Dialog dari Radix UI
 import { useForm } from 'react-hook-form'; // Import React Hook Form
 import { Modal } from '../auth/dialog';
 import { onAddSubmit, onSubmitEdit } from './actions';
+import AddProduct from './add';
+import Editproduct from './edit';
 
 const Products = () => {
 
@@ -168,135 +170,20 @@ const Products = () => {
             )}
 
             {/* Modal Edit */}
-            {selectedProduct && (
-                <Dialog.Root open={openEdit} onOpenChange={setOpenEdit}>
-                    <Dialog.Overlay className="fixed inset-0 bg-black opacity-60" />
-                    <Dialog.Content className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-lg shadow-xl w-[80%] max-w-3xl">
-                        <Dialog.Title className="text-2xl font-semibold text-gray-800">Edit Product</Dialog.Title>
-                        <form onSubmit={handleSubmit(handleEditSubmit)} className="mt-4 space-y-4">
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700">SKU</label>
-                                <input
-                                    {...register('kfa_code')}
-                                    className="w-full p-2 border border-gray-300 rounded mt-1"
-                                    disabled
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700">Name</label>
-                                <input
-                                    {...register('display_name')}
-                                    className="w-full p-2 border border-gray-300 rounded mt-1"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700">Price</label>
-                                <input
-                                    {...register('fix_price')}
-                                    type="number"
-                                    className="w-full p-2 border border-gray-300 rounded mt-1"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700">Description</label>
-                                <textarea
-                                    {...register('description')}
-                                    className="w-full p-2 border border-gray-300 rounded mt-1"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700">Category</label>
-                                <input
-                                    {...register('kategori')}
-                                    className="w-full p-2 border border-gray-300 rounded mt-1"
-                                />
-                            </div>
-
-                            <div className="mt-6 flex justify-end space-x-3">
-                                <Dialog.Close asChild>
-                                    <button className="px-6 py-3 bg-gray-300 text-black rounded-md hover:bg-gray-400 transition">
-                                        Cancel
-                                    </button>
-                                </Dialog.Close>
-                                <button
-                                    type="submit"
-                                    className="px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
-                                >
-                                    Save Changes
-                                </button>
-                            </div>
-                        </form>
-                    </Dialog.Content>
-                </Dialog.Root>
-            )}
+            <Editproduct
+                openEdit={openEdit}
+                setOpenEdit={setOpenEdit}
+                handleEditSubmit={handleEditSubmit}
+                selectedProduct={selectedProduct}
+            />
 
             {/* Modal Add Product */}
-            <Dialog.Root open={openAdd} onOpenChange={setOpenAdd}>
-                <Dialog.Overlay className="fixed inset-0 bg-black opacity-60" />
-                <Dialog.Content className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-lg shadow-xl w-[80%] max-w-3xl">
-                    <Dialog.Title className="text-2xl font-semibold text-gray-800">Add New Product</Dialog.Title>
-                    <form onSubmit={handleSubmit(handleAddSubmit)} className="mt-4 space-y-4">
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700">SKU</label>
-                            <input
-                                {...register('kfa_code')}
-                                className="w-full p-2 border border-gray-300 rounded mt-1"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700">Name</label>
-                            <input
-                                {...register('display_name')}
-                                className="w-full p-2 border border-gray-300 rounded mt-1"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700">Price</label>
-                            <input
-                                {...register('fix_price')}
-                                type="number"
-                                className="w-full p-2 border border-gray-300 rounded mt-1"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700">Description</label>
-                            <textarea
-                                {...register('description')}
-                                className="w-full p-2 border border-gray-300 rounded mt-1"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700">Category</label>
-                            <input
-                                {...register('kategori')}
-                                className="w-full p-2 border border-gray-300 rounded mt-1"
-                            />
-                        </div>
-
-                        <div className="mt-6 flex justify-end space-x-3">
-                            <Dialog.Close asChild>
-                                <button className="px-6 py-3 bg-gray-300 text-black rounded-md hover:bg-gray-400 transition">
-                                    Cancel
-                                </button>
-                            </Dialog.Close>
-                            <button
-                                type="submit"
-                                className="px-6 py-3 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
-                            >
-                                Add Product
-                            </button>
-                        </div>
-                    </form>
-                </Dialog.Content>
-            </Dialog.Root>
+            <AddProduct
+                openAdd={openAdd}
+                setOpenAdd={setOpenAdd}
+                handleAddSubmit={handleAddSubmit}
+                selectedProduct={selectedProduct}
+            />
         </div>
     );
 };
