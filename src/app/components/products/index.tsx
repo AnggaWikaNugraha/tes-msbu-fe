@@ -8,8 +8,17 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { FaEye, FaEdit, FaPlus } from 'react-icons/fa'; // Import ikon dari react-icons
 import * as Dialog from '@radix-ui/react-dialog'; // Import Dialog dari Radix UI
 import { useForm } from 'react-hook-form'; // Import React Hook Form
+import { Modal } from '../auth/dialog';
+import { onAddSubmit, onSubmitEdit } from './actions';
 
 const Products = () => {
+
+    const [modal, setmodal] = useState({
+        isModal: false,
+        title: '',
+        title_sub: '',
+    })
+
     const { data: session } = useSession(); // Mengambil session
     const token = session?.accessToken; // Ambil token dari session
     const [openDetail, setOpenDetail] = useState(false); // State untuk kontrol modal detail
@@ -62,22 +71,24 @@ const Products = () => {
         reset(); // Reset form when opening the add modal
     };
 
-    // Fungsi untuk menangani submit form
-    const onSubmit = (data: any) => {
-        console.log('Updated Product Data:', data);
-        // Tambahkan logika untuk menyimpan data yang diubah, seperti API call
-        setOpenEdit(false); // Tutup modal edit setelah submit
+    const handleEditSubmit = (data: any) => {
+        onSubmitEdit(data, setOpenEdit, setmodal); // Pass parameter ke fungsi
     };
 
-    // Fungsi untuk menangani submit form Add Product
-    const onAddSubmit = (data: any) => {
-        console.log('Add New Product Data:', data);
-        // Tambahkan logika untuk menambahkan produk baru, seperti API call
-        setOpenAdd(false); // Tutup modal add setelah submit
+    const handleAddSubmit = (data: any) => {
+        onAddSubmit(data, setOpenAdd, setmodal); // Pass parameter ke fungsi
     };
 
     return (
         <div className="p-6 space-y-4">
+
+            <Modal
+                isDialogOpen={modal?.isModal}
+                setIsDialogOpen={setmodal}
+                title={modal?.title}
+                titleSub={modal?.title_sub}
+            />
+
             <div className="flex justify-between items-center">
                 <h1 className="text-xl font-semibold">Products</h1>
                 <button
@@ -162,7 +173,7 @@ const Products = () => {
                     <Dialog.Overlay className="fixed inset-0 bg-black opacity-60" />
                     <Dialog.Content className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-lg shadow-xl w-[80%] max-w-3xl">
                         <Dialog.Title className="text-2xl font-semibold text-gray-800">Edit Product</Dialog.Title>
-                        <form onSubmit={handleSubmit(onSubmit)} className="mt-4 space-y-4">
+                        <form onSubmit={handleSubmit(handleEditSubmit)} className="mt-4 space-y-4">
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700">SKU</label>
                                 <input
@@ -228,7 +239,7 @@ const Products = () => {
                 <Dialog.Overlay className="fixed inset-0 bg-black opacity-60" />
                 <Dialog.Content className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-lg shadow-xl w-[80%] max-w-3xl">
                     <Dialog.Title className="text-2xl font-semibold text-gray-800">Add New Product</Dialog.Title>
-                    <form onSubmit={handleSubmit(onAddSubmit)} className="mt-4 space-y-4">
+                    <form onSubmit={handleSubmit(handleAddSubmit)} className="mt-4 space-y-4">
                         <div>
                             <label className="block text-sm font-semibold text-gray-700">SKU</label>
                             <input
