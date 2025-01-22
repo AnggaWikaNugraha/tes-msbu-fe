@@ -1,6 +1,24 @@
 # api kemkes kena cors, saya memmbuat api local dengan respon yang sama dengan kemkes
 # copy env dibawah dan buat file .env
 
+### stack
+
+- typescript
+
+- nextjs
+
+- next
+
+- next auth
+
+- req query
+
+- axios
+
+- tailwinds radix ui shadcn
+
+- react hook form
+
 env
 
 NEXT_PUBLIC_API_AUTH_BASE_URL=http://localhost:3000
